@@ -28,12 +28,6 @@ near call $CONTRACT_ID --accountId=$CONTRACT_ID new '{
   }
 }'
 
-# Mint WETH_TOKEN_ID
-near call $WETH_TOKEN_ID --accountId=$MAIN_ACCOUNT mint '{
- "account_id": "'$MAIN_ACCOUNT'",
- "amount": "100'$DECIMAL_18'"
-}'
-
 
 ######################### B3: Deposit storage #########################
 
@@ -42,9 +36,18 @@ near call $CONTRACT_ID --accountId=$MAIN_ACCOUNT storage_deposit '' --amount=0.1
 
 # Deposit WETH_TOKEN_ID
 near call $WETH_TOKEN_ID --accountId=$CONTRACT_ID storage_deposit '' --amount=0.1
+near call $WETH_TOKEN_ID --accountId=$MAIN_ACCOUNT storage_deposit '' --amount=0.1
 
 # Deposit WNEAR_TOKEN_ID
 near call $WNEAR_TOKEN_ID --accountId=$CONTRACT_ID storage_deposit '' --amount=0.1
+near call $WNEAR_TOKEN_ID --accountId=$MAIN_ACCOUNT storage_deposit '' --amount=0.1
+
+
+# Mint WETH_TOKEN_ID
+near call $WETH_TOKEN_ID --accountId=$MAIN_ACCOUNT mint '{
+ "account_id": "'$MAIN_ACCOUNT'",
+ "amount": "100'$DECIMAL_18'"
+}'
 
 ###################### B4: Add asset #####################
 

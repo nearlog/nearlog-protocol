@@ -15,6 +15,8 @@ echo "################### CREATE ACCOUNT ###################"
 
 near create-account $CONTRACT_ID --masterAccount $MAIN_ACCOUNT --initialBalance 10
 
+# near delete $CONTRACT_ID $MAIN_ACCOUNT
+
 echo "################### CREATE CONTRACT ###################"
 near deploy $CONTRACT_ID --accountId $MAIN_ACCOUNT --wasmFile ../res/nearlog_protocol.wasm
 

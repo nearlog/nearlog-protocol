@@ -1,25 +1,11 @@
-mod contract;
-pub use contract::*;
+mod asset;
+mod asset_config;
+mod pool;
 
-#[allow(dead_code, unused)]
-#[cfg(all(test, not(target_arch = "wasm32")))]
-mod tests {
-    use near_sdk::{test_utils::*, testing_env, AccountId, ONE_NEAR};
+pub use asset::*;
+pub use asset_config::*;
+pub use pool::*;
 
-    fn contract_account() -> AccountId {
-        "contract".parse::<AccountId>().unwrap()
-    }
-
-    fn get_context(predecessor_account_id: AccountId) -> VMContextBuilder {
-        let mut builder = VMContextBuilder::new();
-        builder
-            .current_account_id(contract_account())
-            .account_balance(15 * ONE_NEAR)
-            .signer_account_id(predecessor_account_id.clone())
-            .predecessor_account_id(predecessor_account_id);
-        builder
-    }
-
-    #[test]
-    fn test() {}
-}
+use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::serde::{Deserialize, Serialize};
+use near_sdk::{Balance, Timestamp};

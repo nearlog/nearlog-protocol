@@ -6,6 +6,8 @@ mod asset_config;
 mod big_decimal;
 mod config;
 mod fungible_token;
+mod option_order;
+mod option_orders_manager;
 mod pool;
 mod storage;
 mod storage_tracker;
@@ -18,6 +20,8 @@ pub use asset_config::*;
 pub use big_decimal::*;
 pub use config::*;
 pub use fungible_token::*;
+pub use option_order::*;
+pub use option_orders_manager::*;
 pub use pool::*;
 pub use storage::*;
 pub use storage_tracker::*;
@@ -33,6 +37,7 @@ use near_sdk::{
 use std::collections::HashMap;
 
 pub(crate) type TokenId = AccountId;
+pub(crate) type OptionId = u32;
 
 #[derive(BorshSerialize, BorshStorageKey)]
 enum StorageKey {
@@ -40,6 +45,7 @@ enum StorageKey {
     Config,
     Storage,
     Accounts,
+    OptionOrders,
 }
 
 #[near_bindgen]
@@ -49,6 +55,8 @@ pub struct Contract {
     pub config: LazyOption<Config>,
     pub storage: LookupMap<AccountId, Storage>,
     pub accounts: UnorderedMap<AccountId, Account>,
+    pub option_orders: UnorderedMap<OptionId, OptionOrder>,
+    pub current_option_id: OptionId,
 }
 
 #[near_bindgen]
@@ -61,6 +69,8 @@ impl Contract {
             config: LazyOption::new(StorageKey::Config, Some(&config)),
             storage: LookupMap::new(StorageKey::Storage),
             accounts: UnorderedMap::new(StorageKey::Accounts),
+            option_orders: UnorderedMap::new(StorageKey::OptionOrders),
+            current_option_id: 0u32,
         }
     }
 }

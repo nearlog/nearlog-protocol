@@ -42,3 +42,10 @@ impl Contract {
         self.assets.insert(token_id, &asset.into());
     }
 }
+
+#[near_bindgen]
+impl Contract {
+    pub fn get_asset(&self, token_id: AccountId) -> Option<Asset> {
+        self.internal_get_asset(&token_id)
+    }
+}

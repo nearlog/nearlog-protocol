@@ -28,12 +28,6 @@ near call $CONTRACT_ID --accountId=$CONTRACT_ID new '{
   }
 }'
 
-# Mint WETH_TOKEN_ID
-near call $WETH_TOKEN_ID --accountId=$MAIN_ACCOUNT mint '{
- "account_id": "'$MAIN_ACCOUNT'",
- "amount": "100'$DECIMAL_18'"
-}'
-
 
 ######################### B3: Deposit storage #########################
 
@@ -46,16 +40,12 @@ near call $WETH_TOKEN_ID --accountId=$CONTRACT_ID storage_deposit '' --amount=0.
 # Deposit WNEAR_TOKEN_ID
 near call $WNEAR_TOKEN_ID --accountId=$CONTRACT_ID storage_deposit '' --amount=0.1
 
-###################### B4: Add asset #####################
+###################### Deposit Token #####################
 
-near call $CONTRACT_ID --accountId=$MAIN_ACCOUNT add_asset '{
-  "token_id": "'$WETH_TOKEN_ID'",
-  "asset_config": {
-    "reserve_ratio": 2500,
-    "max_utilization_rate": 8000,
-    "collateralization_ratio": 5000,
-    "extra_decimals": 0,
-    "can_deposit": true,
-    "can_withdraw": true
-  }
+near call $WETH_TOKEN_ID --accountId=$MAIN_ACCOUNT ft_transfer_call '{
+  "receiver_id": "'$CONTRACT_ID'",
+  "amount": "10'$DECIMAL_18'",
+  "msg": "Test deposit"
 }' --amount=$ONE_YOCTO --gas=$GAS
+
+near view $CONTRACT_ID get_asset '{"token_id": "'$WETH_TOKEN_ID'"}'

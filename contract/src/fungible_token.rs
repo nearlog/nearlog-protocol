@@ -28,6 +28,10 @@ impl FungibleTokenReceiver for Contract {
             msg
         );
 
+        let mut account = self.internal_unwrap_account(&sender_id);
+        self.internal_deposit(&mut account, &token_id, amount);
+        self.internal_set_account(&sender_id, account);
+
         PromiseOrValue::Value(U128(0))
     }
 }

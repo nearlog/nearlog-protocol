@@ -1,6 +1,9 @@
 mod account;
+mod account_asset;
+mod actions;
 mod asset;
 mod asset_config;
+mod big_decimal;
 mod config;
 mod fungible_token;
 mod pool;
@@ -8,8 +11,11 @@ mod storage;
 mod storage_tracker;
 
 pub use account::*;
+pub use account_asset::*;
+pub use actions::*;
 pub use asset::*;
 pub use asset_config::*;
+pub use big_decimal::*;
 pub use config::*;
 pub use fungible_token::*;
 pub use pool::*;

@@ -51,3 +51,4 @@ near call $WETH_TOKEN_ID --accountId=$MAIN_ACCOUNT ft_transfer_call '{
 }' --amount=$ONE_YOCTO --gas=$GAS
 
 near view $CONTRACT_ID get_asset '{"token_id": "'$WETH_TOKEN_ID'"}'
+near view $CONTRACT_ID get_account '{"account_id": "'$MAIN_ACCOUNT'"}'

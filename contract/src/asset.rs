@@ -1,5 +1,7 @@
 use crate::*;
 
+pub const MS_PER_YEAR: u64 = 31536000000;
+
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Clone)]
 #[cfg_attr(not(target_arch = "wasm32"), derive(Debug, Deserialize))]
 #[serde(crate = "near_sdk::serde")]

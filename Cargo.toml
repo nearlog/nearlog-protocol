@@ -1,0 +1,29 @@
+[package]
+name = "nearlog-protocol"
+version = "0.1.0"
+authors = ["TN <tiennh.cf@nearlenddao.com>"]
+edition = "2018"
+
+[dev-dependencies]
+near-sdk = "=4.0.0-pre.7"
+near-sdk-sim = "=4.0.0-pre.7"
+near-contract-standards = "=4.0.0-pre.7"
+
+contract = { path = "./contract" }
+
+approx = "0.5"
+
+[profile.release]
+codegen-units = 1
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"
+lto = true
+debug = false
+panic = "abort"
+overflow-checks = true
+
+
+[workspace]
+members = [
+    "contract",
+]

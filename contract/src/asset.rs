@@ -27,3 +27,14 @@ impl Asset {
         }
     }
 }
+
+impl Contract {
+    pub fn internal_unwrap_asset(&self, token_id: &TokenId) -> Asset {
+        self.internal_get_asset(token_id).expect("Asset not found")
+    }
+
+    pub fn internal_get_asset(&self, token_id: &TokenId) -> Option<Asset> {
+        let asset = self.assets.get(token_id);
+        asset
+    }
+}

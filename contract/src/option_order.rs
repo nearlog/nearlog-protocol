@@ -1,12 +1,31 @@
 use crate::*;
+use std::fmt::{Display, Formatter, Result};
+
+#[derive(Debug, BorshSerialize, BorshDeserialize, Serialize, Deserialize, Eq, PartialEq, Clone)]
+#[serde(crate = "near_sdk::serde")]
+pub enum OptionType {
+    Call,
+    Put,
+}
+
+impl Display for OptionType {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        match self {
+            OptionType::Call => write!(f, "Call"),
+            OptionType::Put => write!(f, "Put"),
+        }
+    }
+}
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone)]
-#[cfg_attr(not(target_arch = "wasm32"), derive(Debug))]
 #[serde(crate = "near_sdk::serde")]
 pub struct OptionOrder {
-    pub option_type: u8,
+    pub option_type: OptionType,
+    // Option amount
     pub amount: Balance,
+    // Strike price of the option
     pub strike: Balance,
-    pub period: u32,
+    // Time Option exprired
+    pub expiration: u64,
     pub premium: u32,
 }

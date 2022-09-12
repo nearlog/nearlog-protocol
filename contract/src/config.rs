@@ -6,6 +6,9 @@ use crate::*;
 pub struct Config {
     /// The account ID of the contract owner that allows to modify config, assets and use reserves.
     pub owner_id: AccountId,
+
+    /// The account ID of the oracle contract
+    pub oracle_account_id: AccountId,
 }
 
 impl Contract {
@@ -19,6 +22,10 @@ impl Contract {
             &self.internal_config().owner_id,
             "Not an owner"
         );
+    }
+
+    pub fn get_oracle_account_id(&self) -> AccountId {
+        self.internal_config().oracle_account_id.into()
     }
 }
 

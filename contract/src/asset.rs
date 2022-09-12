@@ -37,4 +37,8 @@ impl Contract {
         let asset = self.assets.get(token_id);
         asset
     }
+
+    pub fn internal_set_asset(&mut self, token_id: &TokenId, asset: Asset) {
+        self.assets.insert(token_id, &asset.into());
+    }
 }

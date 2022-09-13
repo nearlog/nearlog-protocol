@@ -28,6 +28,10 @@ impl Asset {
             config,
         }
     }
+
+    pub fn available_amount(&self) -> Balance {
+        self.supplied.balance + self.reserved - self.locked.balance
+    }
 }
 
 impl Contract {

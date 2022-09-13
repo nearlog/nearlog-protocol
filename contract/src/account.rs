@@ -8,6 +8,8 @@ pub struct Account {
     /// A list of assets that are supplied by the account.
     /// It's not returned for account pagination.
     pub supplied: HashMap<TokenId, Shares>,
+    /// A list of option orders are bought by the account
+    pub options: HashMap<OptionId, OptionOrder>,
     /// Tracks changes in storage usage by persistent collections in this account.
     #[borsh_skip]
     #[serde(skip)]
@@ -19,6 +21,7 @@ impl Account {
         Self {
             account_id: account_id.clone(),
             supplied: HashMap::new(),
+            options: HashMap::new(),
             storage_tracker: Default::default(),
         }
     }

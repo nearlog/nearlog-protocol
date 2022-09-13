@@ -6,6 +6,7 @@ mod asset_config;
 mod big_decimal;
 mod black_scholes;
 mod config;
+mod events;
 mod fungible_token;
 mod option_order;
 mod option_orders_manager;
@@ -24,6 +25,7 @@ pub use asset_config::*;
 pub use big_decimal::*;
 pub use black_scholes::*;
 pub use config::*;
+pub use events::*;
 pub use fungible_token::*;
 pub use option_order::*;
 pub use option_orders_manager::*;
@@ -38,7 +40,7 @@ use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::{LazyOption, LookupMap, UnorderedMap};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{
-    assert_one_yocto, env, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault,
+    assert_one_yocto, env, log, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault,
     Promise, Timestamp,
 };
 

@@ -186,6 +186,16 @@ impl BigDecimal {
         Self((self.0 * U384::from(MAX_RATIO) + U384::from(MAX_RATIO / 2)) / U384::from(ratio))
     }
 
+    pub fn from_balance_price(balance: Balance, price: &Price, extra_decimals: u8) -> Self {
+        let num = U384::from(price.multiplier) * U384::from(balance);
+        let denominator_decimals = price.decimals + extra_decimals;
+        if denominator_decimals > NUM_DECIMALS {
+            Self(num / U384::exp10((denominator_decimals - NUM_DECIMALS) as usize))
+        } else {
+            Self(num * U384::exp10((NUM_DECIMALS - denominator_decimals) as usize))
+        }
+    }
+
     pub fn round_u128(&self) -> u128 {
         ((self.0 + U384::from(HALF_DIVISOR)) / U384::from(BIG_DIVISOR)).as_u128()
     }
@@ -202,6 +212,10 @@ impl BigDecimal {
 
     pub fn div_u128(&self, rhs: u128) -> BigDecimal {
         Self(self.0 / U384::from(rhs))
+    }
+
+    pub fn sub(&self, rhs: BigDecimal) -> BigDecimal {
+        Self(self.0 - rhs.0)
     }
 
     pub fn zero() -> Self {

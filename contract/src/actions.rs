@@ -8,8 +8,10 @@ use crate::*;
 pub struct OptionOrderReq {
     pub option_id: OptionId,
     pub option_type: OptionType,
+    pub strike: Balance,
     pub amount: Balance,
     pub token_id: TokenId,
+    pub expiration: u64,
 }
 
 #[derive(Deserialize)]
@@ -59,6 +61,10 @@ impl Contract {
 
         println!("{:.4}", option.call_price());
         println!("{:.4}", option.put_price());
+
+        let next_option_id = self.current_option_id + 1;
+        self.current_option_id = next_option_id;
+        option_order.option_id = next_option_id;
 
         option_order.option_type = option_order_req.option_type.clone();
         option_order.amount = option_order_req.amount;

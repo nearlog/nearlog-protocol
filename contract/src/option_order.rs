@@ -20,6 +20,9 @@ impl Display for OptionType {
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone)]
 #[serde(crate = "near_sdk::serde")]
 pub struct OptionOrder {
+    // Option ID
+    pub option_id: OptionId,
+    // Option type
     pub option_type: OptionType,
     // Option amount
     pub amount: Balance,
@@ -34,6 +37,7 @@ pub struct OptionOrder {
 impl OptionOrder {
     pub fn new() -> Self {
         Self {
+            option_id: 0,
             option_type: OptionType::Call,
             amount: 0,
             strike: 0,

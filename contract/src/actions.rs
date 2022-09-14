@@ -11,7 +11,7 @@ pub struct OptionOrderReq {
     pub strike: Balance,
     pub amount: Balance,
     pub token_id: TokenId,
-    pub expiration: u64,
+    pub expiration: f64,
 }
 
 #[derive(Deserialize)]
@@ -47,20 +47,31 @@ impl Contract {
         let price = prices.get_unwrap(&option_order_req.token_id);
         let mut option_order = self.internal_get_order_or_default(&option_order_req.option_id);
 
-        // let spot_price =
-        //     BigDecimal::from_balance_price(option_order.amount, price, asset.config.extra_decimals);
+        let spot_price =
+            BigDecimal::from_balance_price(option_order.amount, price, asset.config.extra_decimals);
 
-        // TMP
+        let s_price = spot_price.f64();
+        let k_price = option_order_req.strike as f64;
+        let rist_free = 0.016; // risk-free rate 1.6%
+        let expiration_time = option_order_req.expiration; //1 month until expiration
+        let volatility = 0.15; // 15% volatility
+
         let option = BlackScholes {
-            S: 100.00,        // spot price
-            K: 110.00,        // strike price
-            r: 0.016,         // risk-free rate 1.6%
-            t: 0.08333333333, // 1 month until expiration
-            v: 0.15,          // 15% volatility
+            S: s_price,         // spot price
+            K: k_price,         // strike price
+            r: rist_free,       // risk-free rate 1.6%
+            t: expiration_time, // 1 month until expiration
+            v: volatility,      // 15% volatility
         };
 
-        println!("{:.4}", option.call_price());
-        println!("{:.4}", option.put_price());
+        // Example
+        // let option = BlackScholes {
+        //     S: 100.00,        // spot price
+        //     K: 110.00,        // strike price
+        //     r: 0.016,         // risk-free rate 1.6%
+        //     t: 0.08333333333, // 1 month until expiration
+        //     v: 0.15,          // 15% volatility
+        // };
 
         let next_option_id = self.current_option_id + 1;
         self.current_option_id = next_option_id;

@@ -15,16 +15,16 @@ impl Contract {
     }
 }
 
-#[near_bindgen]
-impl Contract {
-    #[payable]
-    pub fn create_order(&mut self, option_order: &OptionOrder) {
-        assert_one_yocto();
-        assert!(option_order.strike > 0, "Amount is too small");
+// #[near_bindgen]
+// impl Contract {
+//     #[payable]
+//     pub fn create_order(&mut self, option_order: &OptionOrder) {
+//         assert_one_yocto();
+//         assert!(option_order.strike > 0, "Amount is too small");
 
-        let next_option_id = self.current_option_id + 1;
-        self.current_option_id = next_option_id;
+//         let next_option_id = self.current_option_id + 1;
+//         self.current_option_id = next_option_id;
 
-        self.internal_set_order(&next_option_id, option_order.clone());
-    }
-}
+//         self.internal_set_order(&next_option_id, option_order.clone());
+//     }
+// }

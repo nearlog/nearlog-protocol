@@ -17,7 +17,7 @@ pub mod emit {
         pub option_type: &'a OptionType,
         pub amount: &'a Balance,
         pub strike: &'a Balance,
-        pub expiration: &'a u64,
+        pub expiration: &'a f64,
         pub premium: &'a f64,
     }
 

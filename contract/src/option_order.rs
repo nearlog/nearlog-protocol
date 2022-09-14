@@ -29,7 +29,7 @@ pub struct OptionOrder {
     // Strike price of the option
     pub strike: Balance,
     // Time Option exprired
-    pub expiration: u64,
+    pub expiration: f64,
     // Option premium is the income received by an investor who sells an option contract, or the current price of an option contract that has yet to expire.
     pub premium: f64,
 }
@@ -41,7 +41,7 @@ impl OptionOrder {
             option_type: OptionType::Call,
             amount: 0,
             strike: 0,
-            expiration: 0,
+            expiration: 0.0,
             premium: 0.0,
         }
     }

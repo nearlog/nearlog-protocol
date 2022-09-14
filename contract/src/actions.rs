@@ -52,14 +52,14 @@ impl Contract {
 
         let s_price = spot_price.f64();
         let k_price = option_order_req.strike as f64;
-        let rist_free = 0.016; // risk-free rate 1.6%
-        let expiration_time = option_order_req.expiration; //1 month until expiration
-        let volatility = 0.15; // 15% volatility
+        let expiration_time = option_order_req.expiration;
+        let volatility = asset.config.volatility_ratio as f64 / 10000f64;
+        let risk_free = asset.config.risk_free as f64 / 10000f64;
 
         let option = BlackScholes {
             S: s_price,         // spot price
             K: k_price,         // strike price
-            r: rist_free,       // risk-free rate 1.6%
+            r: risk_free,       // risk-free rate 1.6%
             t: expiration_time, // 1 month until expiration
             v: volatility,      // 15% volatility
         };
@@ -86,7 +86,6 @@ impl Contract {
         }
 
         // Locked liquidity
-
         let available_amount = asset.available_amount();
         let max_lock_shares = asset.locked.amount_to_shares(available_amount, false);
 
@@ -124,7 +123,11 @@ impl Contract {
             .mul(BigDecimal::from(option_order.amount))
             .div(current_price);
 
-        log!("===> Exercise: {:?}", profit.to_string());
+        log!(
+            "===> Exercise: OptionID: {:?}, profit {:?}",
+            &option_order_req.option_id,
+            profit.to_string()
+        );
 
         events::emit::exercise(&option_order_req.option_id);
     }

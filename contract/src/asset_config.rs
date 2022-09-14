@@ -25,7 +25,10 @@ pub struct AssetConfig {
     pub collateralization_ratio: u32,
 
     /// Volatility ratio (multiplied by 10000).
-    // pub volatility_ratio: u32,
+    pub volatility_ratio: u32,
+
+    /// The risk free rate
+    pub risk_free: u32,
 
     /// The amount of extra decimals to use for the fungible token. For example, if the asset like
     /// USDT has `6` decimals in the metadata, the `extra_decimals` can be set to `12`, to make the
